@@ -17,7 +17,7 @@ class Trainer:
     def train(self, global_step, b_obs, b_actions, b_log_probs, b_advantages, b_returns, b_values, b_mean, b_std):
         b_index = np.arange(self.args.batch_size)
 
-        for epoch in range(1, self.args.update_epochs + 1):
+        for epoch in range(self.args.update_epochs):
             np.random.shuffle(b_index)
 
             for start in range(0, self.args.batch_size, self.args.minibatch_size):
@@ -52,7 +52,7 @@ class Trainer:
                     mb_advantages = (mb_advantages - mb_advantages.mean()) / (mb_advantages.std() + 1e-8)
 
                 # Policy loss
-                policy_loss = self.compute_policy_loss(ratios, mb_advantages, kl)
+                policy_loss = self.compute_policy_loss(ratios, mb_advantages)
 
                 # Value loss
                 value_loss = self.compute_value_loss(new_value, b_returns[mb_index], b_values[mb_index])
@@ -91,7 +91,7 @@ class Trainer:
 
         return value_loss
 
-    def compute_policy_loss(self, ratios, mb_advantages, kl):
+    def compute_policy_loss(self, ratios, mb_advantages):
         """
         Compute the policy loss
         """
