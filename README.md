@@ -1,4 +1,4 @@
-# This is our implementation of PPO and SPO
+# This is our clean implementation of PPO and SPO
 
 ## Mujoco
 Create Anaconda environment
