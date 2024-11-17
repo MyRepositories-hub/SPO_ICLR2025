@@ -13,7 +13,7 @@ class Trainer:
     def train(self, numpy_rng, global_step, b_obs, b_actions, b_log_probs, b_advantages, b_returns, b_values):
         b_index = np.arange(self.args.batch_size)
 
-        for epoch in range(1, self.args.update_epochs + 1):
+        for epoch in range(self.args.update_epochs):
             numpy_rng.shuffle(b_index)
 
             for start in range(0, self.args.batch_size, self.args.minibatch_size):
